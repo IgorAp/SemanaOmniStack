@@ -3,6 +3,7 @@ import React from 'react';
 import './global.css';
 import './App.css';
 import './Sidebar.css';
+import './Main.css';
 
 
 export default function App() {
@@ -28,7 +29,7 @@ export default function App() {
               <input name="latitude" id="latitude" required />
             </div>
             <div className="input-block">
-            <label htmlFor="longitude">Longitude</label>
+              <label htmlFor="longitude">Longitude</label>
               <input name="longitude" id="longitude" required />
             </div>
           </div>
@@ -36,7 +37,60 @@ export default function App() {
         </form>
       </aside>
       <main>
-
+        <ul>
+          <li className="dev-item">
+            <header>
+              <img src="https://avatars3.githubusercontent.com/u/28979212?s=460&v=4" alt="igor ap" />
+              <div className="user-info">
+                <strong>Igor Aparecido</strong>
+                <span>Node.js, React.js, C#</span>
+              </div>
+            </header>
+            <p>
+              Desenvolvedor fullstack
+            </p>
+            <a href="https://github.com/IgorAp">Acessar Perfíl</a>
+          </li>
+          <li className="dev-item">
+            <header>
+              <img src="https://avatars3.githubusercontent.com/u/28979212?s=460&v=4" alt="igor ap" />
+              <div className="user-info">
+                <strong>Igor Aparecido</strong>
+                <span>Node.js, React.js, C#</span>
+              </div>
+            </header>
+            <p>
+              Desenvolvedor fullstack
+            </p>
+            <a href="https://github.com/IgorAp">Acessar Perfíl</a>
+          </li>
+          <li className="dev-item">
+            <header>
+              <img src="https://avatars3.githubusercontent.com/u/28979212?s=460&v=4" alt="igor ap" />
+              <div className="user-info">
+                <strong>Igor Aparecido</strong>
+                <span>Node.js, React.js, C#</span>
+              </div>
+            </header>
+            <p>
+              Desenvolvedor fullstack
+            </p>
+            <a href="https://github.com/IgorAp">Acessar Perfíl</a>
+          </li>
+          <li className="dev-item">
+            <header>
+              <img src="https://avatars3.githubusercontent.com/u/28979212?s=460&v=4" alt="igor ap" />
+              <div className="user-info">
+                <strong>Igor Aparecido</strong>
+                <span>Node.js, React.js, C#</span>
+              </div>
+            </header>
+            <p>
+              Desenvolvedor fullstack
+            </p>
+            <a href="https://github.com/IgorAp">Acessar Perfíl</a>
+          </li>
+        </ul>
       </main>
     </div>
   )

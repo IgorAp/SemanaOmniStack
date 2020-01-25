@@ -58,7 +58,7 @@ aside form button[type="submit"] {
     font-weight: bold;
     padding: 10px 0;
     color: #FFF;
-    background: rgb(84, 84, 228);
+    background: #5454e4;
     cursor: pointer;
     transition: 500ms;
 }
@@ -66,5 +66,5 @@ aside form button[type="submit"] {
 aside form button[type="submit"]:hover {
     padding: 10px 0;
     color: #FFF;
-    background: rgb(29, 29, 121);
+    background: #1d1d79;
 }
