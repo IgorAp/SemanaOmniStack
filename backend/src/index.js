@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
+
 require('dotenv/config');
 
 const app = express();
@@ -15,9 +17,12 @@ mongoose.connect('mongodb://localhost:27017/omnistack?authSource=admin'
 ,options);
 const db = mongoose.connection;
 
+app.use(cors({
+  origin: 'http://localhost:3000'     
+}));
 app.use(express.json());
 app.use(routes);
 
-app.listen(3000, () => {
+app.listen(3333, () => {
     console.log("API is running");
 });
