@@ -30,7 +30,7 @@ module.exports = {
             location
         });
     
-        return res.json({ dev });
+        return res.json(dev);
     },
     async index(req,res) {
         return res.json(await Dev.find());
