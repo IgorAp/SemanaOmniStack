@@ -3,6 +3,8 @@ const Dev = require('../models/Dev');
 
 module.exports = {
     async index (req,res){
+        console.log(req.query);
+
         const { latitude, longitude, techs } = req.query;
 
         const techsArray = ParseStringsAsArray(techs);
@@ -24,6 +26,6 @@ module.exports = {
             }
         });
 
-        return res.status(200).json({ devs });
+        return res.status(200).json( devs );
     }
 }

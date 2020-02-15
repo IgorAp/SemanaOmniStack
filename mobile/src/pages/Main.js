@@ -3,9 +3,12 @@ import { StyleSheet, Image, View, Text, TextInput, TouchableOpacity } from 'reac
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { requestPermissionsAsync, getCurrentPositionAsync } from 'expo-location';
 import { MaterialIcons } from '@expo/vector-icons';
+import api from '../services/api';
 
 function Main({ navigation }) {
     const [currentRegion, setCurrentRegion] = useState(null);
+    const [devs, setDevs] = useState([]);
+    const [techs, setTechs] = useState('');
     useEffect(() => {
         async function loeadInitialPosition() {
             const { granted } = await requestPermissionsAsync();
@@ -26,32 +29,63 @@ function Main({ navigation }) {
         }
         loeadInitialPosition();
     }, []);
+
+    async function loadDevs() {
+        const { latitude, longitude } = currentRegion;
+
+        const response = await api.get('/search', {
+            params: {
+                latitude,
+                longitude,
+                techs: techs
+            }
+        });
+        
+        console.log(response);
+        setDevs(response.data);
+        
+    }
+
+    function handleRegionChanged(region) {
+        setCurrentRegion(region);
+    }
+
     return (
         <>
-            <MapView initialRegion={currentRegion} style={styles.map}>
-                <Marker coordinate={{ latitude: -22.9357155, longitude: -46.5424015 }}>
-                    <Image style={styles.avatar} source={{ uri: 'https://avatars3.githubusercontent.com/u/28979212?s=460&v=4' }} />
-                    <Callout onPress={() => {
-                        navigation.navigate('Profile', { github_username: 'IgorAp' });
+            <MapView
+                onRegionChangeComplete={handleRegionChanged}
+                initialRegion={currentRegion} style={styles.map}>
+                {devs.map(dev => (
+                    <Marker
+                    key={dev._id}
+                    coordinate={{ 
+                        latitude: dev.location.coordinates[1], 
+                        longitude: dev.location.coordinates[0] 
                     }}>
-                        <View style={styles.callout}>
-                            <Text style={styles.devName}>Igor Aparecido da Silva</Text>
-                            <Text style={styles.devBio}>Fullstack Developer</Text>
-                            <Text style={styles.devTechs}>React.JS, React Native, Nodejs</Text>
-                        </View>
-                    </Callout>
-                </Marker>
+                        <Image style={styles.avatar} source={{ uri: dev.avatar_url }} />
+                        <Callout onPress={() => {
+                            navigation.navigate('Profile', { github_username: dev.github_username });
+                        }}>
+                            <View style={styles.callout}>
+                                <Text style={styles.devName}>{  dev.name  }</Text>
+                                <Text style={styles.devBio}>{ dev.bio }</Text>
+                                <Text style={styles.devTechs}>{ dev.techs.join(', ') }}</Text>
+                            </View>
+                        </Callout>
+                    </Marker>
+                ))}
             </MapView>
             <View style={styles.searchForm}>
-                <TextInput 
-                style={styles.searchInput}
-                placeholder='Buscar devs por tecnologias'
-                placeholderTextColor='#999'
-                autoCapitalize='words'
-                autoCorrect={false}
+                <TextInput
+                    onChangeText={setTechs}
+                    style={styles.searchInput}
+                    placeholder='Buscar devs por tecnologias'
+                    placeholderTextColor='#999'
+                    autoCapitalize='words'
+                    autoCorrect={false}
                 />
-                <TouchableOpacity style={styles.loadButton} onPress={ () => {} } >
-                    <MaterialIcons name='my-location'color='#FFF'/>
+                <TouchableOpacity onPress={loadDevs} style={styles.loadButton} >
+                    <MaterialIcons name='my-location' color='#FFF' />
                 </TouchableOpacity>
             </View>
         </>
@@ -83,7 +117,7 @@ const styles = StyleSheet.create({
     devTechs: {
         marginTop: 5
     },
-    searchForm:{
+    searchForm: {
         position: 'absolute',
         top: 20,
         left: 20,
@@ -91,7 +125,7 @@ const styles = StyleSheet.create({
         zIndex: 5,
         flexDirection: 'row'
     },
-    searchInput:{
+    searchInput: {
         flex: 1,
         height: 50,
         backgroundColor: '#FFF',

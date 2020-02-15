@@ -17,9 +17,7 @@ mongoose.connect('mongodb://localhost:27017/omnistack?authSource=admin'
 ,options);
 const db = mongoose.connection;
 
-app.use(cors({
-  origin: 'http://localhost:3000'     
-}));
+app.use(cors());
 app.use(express.json());
 app.use(routes);
 
